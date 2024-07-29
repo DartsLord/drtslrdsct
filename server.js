@@ -15,10 +15,7 @@ nextApp.prepare().then(async() => {
     const server = http.createServer(app);
     const io = require("socket.io")(server, {
         cors: {
-            origin: ["*"],
-            allowedHeaders: ["*"],
-            allowedOrigins: ["*"],
-            allowedMethods: ["GET", "POST"],
+            origin: "*",
             credentials: true
         }
     });

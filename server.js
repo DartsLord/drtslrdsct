@@ -7,6 +7,7 @@ const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
 const nextHandler = nextApp.getRequestHandler();
+
 let oldHash = ''
 let dataHash = ''
 
@@ -14,40 +15,8 @@ nextApp.prepare().then(async() => {
     const app= express();
     const server = http.createServer(app);
     const io = require("socket.io")(server);
-    // app.use(cors({
-    //     origin: true,
-    //     methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
-    //     allowEIO4: true,
-    //     transport: ['websocket'],
-    //     handlePreflightRequest: (req, res) => {
-    //         res.writeHead(200, {
-    //             "Access-Control-Allow-Origin": "https://dartslord.ru",
-    //             "Access-Control-Allow-Methods": "GET,POST",
-    //             "Access-Control-Allow-Headers": "dartslord-custom-header",
-    //             "Access-Control-Allow-Credentials": true
-    //         });
-    //         res.end();
-    //     }
-    // }));
 
-    // app.use(function (req, res, next) {
-    //
-    //     // Website you wish to allow to connect
-    //     res.header('Access-Control-Allow-Origin', 'https://dartslord.ru');
-    //
-    //     // Request methods you wish to allow
-    //     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    //
-    //     // Request headers you wish to allow
-    //     res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    //
-    //     // Set to true if you need the website to include cookies in the requests sent
-    //     // to the API (e.g. in case you use sessions)
-    //     res.setHeader('Access-Control-Allow-Credentials', false);
-    //
-    //     // Pass to next layer of middleware
-    //     next();
-    // });
+    app.use(cors())
 
     // origin: ["http://localhost:3000", "http://localhost:3001", "http://dartslord.ru", "https://dartslord.ru", "http://dartslord.ru/socket.io/", "https://dartslord.ru/socket.io/", "wss://dartslord.ru/socket.io/", "ws://dartslord.ru/socket.io/", "wss://185.104.248.121:3001/socket.io/", "ws://185.104.248.121:3001/socket.io/", "http://185.104.248.121", "https://185.104.248.121", "wss://185.104.248.121:3001", "ws://185.104.248.121:3001"],
     io.attach(server);

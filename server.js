@@ -33,6 +33,15 @@ nextApp.prepare().then(async() => {
         methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
         allowEIO4: true,
         transport: ['websocket'],
+        handlePreflightRequest: (req, res) => {
+            res.writeHead(200, {
+                "Access-Control-Allow-Origin": "https://dartslord.ru",
+                "Access-Control-Allow-Methods": "GET,POST",
+                "Access-Control-Allow-Headers": "dartslord-custom-header",
+                "Access-Control-Allow-Credentials": true
+            });
+            res.end();
+        }
     }));
 
     app.use(function (req, res, next) {

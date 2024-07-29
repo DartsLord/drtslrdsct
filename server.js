@@ -13,7 +13,6 @@ let dataHash = ''
 nextApp.prepare().then(async() => {
     const app= express();
     const server = http.createServer(app);
-    const allowedOrigins = ["https://dartslord.ru"];
     const io = require("socket.io")(server, {
         log: false,
         agent: false,
@@ -22,7 +21,7 @@ nextApp.prepare().then(async() => {
     });
     app.use(cors({
         origin: true,
-        methods: ["GET", "POST"]
+        methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
     }));
 
     app.use(function (req, res, next) {

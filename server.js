@@ -31,6 +31,8 @@ nextApp.prepare().then(async() => {
     app.use(cors({
         origin: true,
         methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
+        allowEIO4: true,
+        transport: ['websocket'],
     }));
 
     app.use(function (req, res, next) {

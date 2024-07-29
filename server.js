@@ -27,7 +27,7 @@ nextApp.prepare().then(async() => {
     app.use(function (req, res, next) {
 
         // Website you wish to allow to connect
-        res.header('Access-Control-Allow-Origin', 'https://dartslord.ru');
+        res.header('Access-Control-Allow-Origin', ['https://dartslord.ru', 'http://85.209.2.127']);
 
         // Request methods you wish to allow
         res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');

@@ -1,18 +1,30 @@
 const express = require('express');
 const http = require('http');
 const next = require('next');
+const cors = require('cors');
 
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
 const nextHandler = nextApp.getRequestHandler();
-
 let oldHash = ''
 let dataHash = ''
 
 nextApp.prepare().then(async() => {
     const app= express();
     const server = http.createServer(app);
+    const allowedOrigins = ["https://dartslord.ru"];
+
+    app.use(cors({
+        origin: function (origin, callback) {
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error('Not allowed by CORS'));
+            }
+        }
+    }));
+
     const io = require("socket.io")(server, {
         cors: {
             origin: "*",

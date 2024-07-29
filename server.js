@@ -15,11 +15,14 @@ nextApp.prepare().then(async() => {
     const server = http.createServer(app);
     const io = require("socket.io")(server, {
         cors: {
-            origin: ["http://localhost:3000", "http://localhost:3001", "http://dartslord.ru", "https://dartslord.ru", "http://dartslord.ru/socket.io/", "https://dartslord.ru/socket.io/", "wss://dartslord.ru/socket.io/", "ws://dartslord.ru/socket.io/", "wss://185.104.248.121:3001/socket.io/", "ws://185.104.248.121:3001/socket.io/", "http://185.104.248.121", "https://185.104.248.121", "wss://185.104.248.121:3001", "ws://185.104.248.121:3001"],
+            origin: ["*"],
+            allowedHeaders: ["*"],
+            allowedOrigins: ["*"],
+            allowedMethods: ["GET", "POST"],
             credentials: true
         }
     });
-
+    // origin: ["http://localhost:3000", "http://localhost:3001", "http://dartslord.ru", "https://dartslord.ru", "http://dartslord.ru/socket.io/", "https://dartslord.ru/socket.io/", "wss://dartslord.ru/socket.io/", "ws://dartslord.ru/socket.io/", "wss://185.104.248.121:3001/socket.io/", "ws://185.104.248.121:3001/socket.io/", "http://185.104.248.121", "https://185.104.248.121", "wss://185.104.248.121:3001", "ws://185.104.248.121:3001"],
     io.attach(server);
 
     io.on('connection', (socket) => {

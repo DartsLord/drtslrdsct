@@ -17,7 +17,16 @@ nextApp.prepare().then(async() => {
         log: false,
         agent: false,
         origins: '*:*',
-        transports: ['websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling', 'polling']
+        transports: ['websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling', 'polling'],
+        handlePreflightRequest: (req, res) => {
+            res.writeHead(200, {
+                "Access-Control-Allow-Origin": "https://dartslord.ru",
+                "Access-Control-Allow-Methods": "GET,POST",
+                "Access-Control-Allow-Headers": "dartslord-custom-header",
+                "Access-Control-Allow-Credentials": true
+            });
+            res.end();
+        }
     });
     app.use(cors({
         origin: true,

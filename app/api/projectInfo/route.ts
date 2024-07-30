@@ -4,6 +4,30 @@ const prisma = new PrismaClient()
 
 let allSumsObject: object = {}
 let allGapsObject: object = {}
+let allCNSumObject: object = {}
+let allCNGapObject: object = {}
+let allODSumObject: object = {}
+let allODGapObject: object = {}
+let allBWSumObject: object = {}
+let allBWGapObject: object = {}
+let allQSumObject: object = {}
+let allQGapObject: object = {}
+
+let fullRowNoBull: number[] = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5]
+
+const blacks: number[] = [2,3,7,8,10,12,13,14,18,20]
+const whites: number[] = [1,4,5,6,9,11,15,16,17,19]
+
+const chets: number[] = [2,4,6,8,10,12,14,16,18,20]
+const nechets: number[] = [1,3,5,7,9,11,13,15,17,19]
+
+const ods: number[] = [1,2,3,4,5,6,7,8,9,10]
+const dds: number[] = [11,12,13,14,15,16,17,18,19,20]
+
+let q1: number[] = [20, 1, 18, 4, 13]
+let q2: number[] = [6, 10, 15, 2, 17]
+let q3: number[] = [3, 19, 7, 16, 8]
+let q4: number[] = [11, 14, 9, 12, 5]
 
 export async function GET(request: Request) {
     let round
@@ -122,13 +146,96 @@ export async function GET(request: Request) {
             let num20Gap: number = 0
             let num21Gap: number = 0
 
+            let BSum: number = 0
+            let BGap: number = 0
+            let WSum: number = 0
+            let WGap: number = 0
+            let CSum: number = 0
+            let CGap: number = 0
+            let NSum: number = 0
+            let NGap: number = 0
+            let OSum: number = 0
+            let OGap: number = 0
+            let DSum: number = 0
+            let DGap: number = 0
+            let Q1Sum: number = 0
+            let Q1Gap: number = 0
+            let Q2Sum: number = 0
+            let Q2Gap: number = 0
+            let Q3Sum: number = 0
+            let Q3Gap: number = 0
+            let Q4Sum: number = 0
+            let Q4Gap: number = 0
+
             history = []
 
             contestRecords.forEach((record, index) => {
                 let hit = record.h
                 history.push(hit)
+
                 if(damaged.indexOf(hit) === -1){
                     damaged.push(hit)
+                }
+
+                if(blacks.indexOf(hit) > -1){
+                    BSum++
+                    BGap = 0
+                } else {
+                    BGap++
+                }
+                if(whites.indexOf(hit) > -1){
+                    WSum++
+                    WGap = 0
+                } else {
+                    WGap++
+                }
+                if(chets.indexOf(hit) > -1){
+                    CSum++
+                    CGap = 0
+                } else {
+                    CGap++
+                }
+                if(nechets.indexOf(hit) > -1){
+                    NSum++
+                    NGap = 0
+                } else {
+                    NGap++
+                }
+                if(ods.indexOf(hit) > -1){
+                    OSum++
+                    OGap = 0
+                } else {
+                    OGap++
+                }
+                if(dds.indexOf(hit) > -1){
+                    DSum++
+                    DGap = 0
+                } else {
+                    DGap++
+                }
+                if(q1.indexOf(hit) > -1){
+                    Q1Sum++
+                    Q1Gap = 0
+                } else {
+                    Q1Gap++
+                }
+                if(q2.indexOf(hit) > -1){
+                    Q2Sum++
+                    Q2Gap = 0
+                } else {
+                    Q2Gap++
+                }
+                if(q3.indexOf(hit) > -1){
+                    Q3Sum++
+                    Q3Gap = 0
+                } else {
+                    Q3Gap++
+                }
+                if(q4.indexOf(hit) > -1){
+                    Q4Sum++
+                    Q4Gap = 0
+                } else {
+                    Q4Gap++
                 }
 
                 // собрать суммы всех
@@ -266,6 +373,7 @@ export async function GET(request: Request) {
                 }
             }
 
+            // раскладываем по объектам
             allSumsObject = {
                 1:num1Sum,
                 2:num2Sum,
@@ -312,8 +420,66 @@ export async function GET(request: Request) {
                 20:num20Gap,
                 21:num21Gap
             }
+            allCNSumObject = {
+                'C':CSum,
+                'N':NSum,
+            }
+            allCNGapObject = {
+                'C':CGap,
+                'N':NGap,
+            }
+            allBWSumObject = {
+                'B':BSum,
+                'W':WSum,
+            }
+            allBWGapObject = {
+                'B':BGap,
+                'W':WGap,
+            }
+            allODSumObject = {
+                'O':OSum,
+                'D':DSum,
+            }
+            allODGapObject = {
+                'O':OGap,
+                'D':DGap,
+            }
+            allQSumObject = {
+                'Q1':Q1Sum,
+                'Q2':Q2Sum,
+                'Q3':Q3Sum,
+                'Q4':Q4Sum,
+            }
+            allQGapObject = {
+                'Q1':Q1Gap,
+                'Q2':Q2Gap,
+                'Q3':Q3Gap,
+                'Q4':Q4Gap,
+            }
         }
     }
 
-    return NextResponse.json({contest, round, outcome, history, lasthit, damaged, zeros, allSumsObject, allGapsObject, fpName, spName, fpScore, spScore}, { status: 200 })
+    return NextResponse.json({
+        contest,
+        round,
+        outcome,
+        lasthit,
+        fpName,
+        spName,
+        fpScore,
+        spScore,
+        history,
+        damaged,
+        zeros,
+        allSumsObject,
+        allGapsObject,
+        allCNSumObject,
+        allCNGapObject,
+        allBWSumObject,
+        allBWGapObject,
+        allODSumObject,
+        allODGapObject,
+        allQSumObject,
+        allQGapObject
+    }, { status: 200 })
 }

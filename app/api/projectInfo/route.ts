@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient()
 
-let allSumsObject: object = {}
-let allGapsObject: object = {}
+let allSumsArray: number[] = []
+let allGapsArray: number[] = []
 let allCNSumObject: object = {}
 let allCNGapObject: object = {}
 let allODSumObject: object = {}
@@ -13,6 +13,7 @@ let allBWGapObject: object = {}
 let allQSumObject: object = {}
 let allQGapObject: object = {}
 
+let fullRow: number[] = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5, 21]
 let fullRowNoBull: number[] = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5]
 
 const blacks: number[] = [2,3,7,8,10,12,13,14,18,20]
@@ -374,87 +375,88 @@ export async function GET(request: Request) {
             }
 
             // раскладываем по объектам
-            allSumsObject = {
-                1:num1Sum,
-                2:num2Sum,
-                3:num3Sum,
-                4:num4Sum,
-                5:num5Sum,
-                6:num6Sum,
-                7:num7Sum,
-                8:num8Sum,
-                9:num9Sum,
-                10:num10Sum,
-                11:num11Sum,
-                12:num12Sum,
-                13:num13Sum,
-                14:num14Sum,
-                15:num15Sum,
-                16:num16Sum,
-                17:num17Sum,
-                18:num18Sum,
-                19:num19Sum,
-                20:num20Sum,
-                21:num21Sum
-            }
-            allGapsObject = {
-                1:num1Gap,
-                2:num2Gap,
-                3:num3Gap,
-                4:num4Gap,
-                5:num5Gap,
-                6:num6Gap,
-                7:num7Gap,
-                8:num8Gap,
-                9:num9Gap,
-                10:num10Gap,
-                11:num11Gap,
-                12:num12Gap,
-                13:num13Gap,
-                14:num14Gap,
-                15:num15Gap,
-                16:num16Gap,
-                17:num17Gap,
-                18:num18Gap,
-                19:num19Gap,
-                20:num20Gap,
-                21:num21Gap
-            }
+            allSumsArray = [
+                num1Sum,
+                num2Sum,
+                num3Sum,
+                num4Sum,
+                num5Sum,
+                num6Sum,
+                num7Sum,
+                num8Sum,
+                num9Sum,
+                num10Sum,
+                num11Sum,
+                num12Sum,
+                num13Sum,
+                num14Sum,
+                num15Sum,
+                num16Sum,
+                num17Sum,
+                num18Sum,
+                num19Sum,
+                num20Sum,
+                num21Sum
+            ]
+            allGapsArray = [
+                num1Gap,
+                num2Gap,
+                num3Gap,
+                num4Gap,
+                num5Gap,
+                num6Gap,
+                num7Gap,
+                num8Gap,
+                num9Gap,
+                num10Gap,
+                num11Gap,
+                num12Gap,
+                num13Gap,
+                num14Gap,
+                num15Gap,
+                num16Gap,
+                num17Gap,
+                num18Gap,
+                num19Gap,
+                num20Gap,
+                num21Gap
+            ]
+
             allCNSumObject = {
-                'C':CSum,
-                'N':NSum,
+                'Чётные':CSum,
+                'Нечётные':NSum,
             }
             allCNGapObject = {
-                'C':CGap,
-                'N':NGap,
+                'Чётные':CGap,
+                'Нечётные':NGap,
             }
             allBWSumObject = {
-                'B':BSum,
-                'W':WSum,
+                'Белые':WSum,
+                'Чёрные':BSum,
             }
             allBWGapObject = {
-                'B':BGap,
-                'W':WGap,
+                'Белые':WGap,
+                'Чёрные':BGap,
             }
             allODSumObject = {
-                'O':OSum,
-                'D':DSum,
+                '1-10':OSum,
+                '11-20':DSum,
             }
             allODGapObject = {
-                'O':OGap,
-                'D':DGap,
+                '1-10':OGap,
+                '11-20':DGap,
             }
             allQSumObject = {
-                'Q1':Q1Sum,
-                'Q2':Q2Sum,
-                'Q3':Q3Sum,
-                'Q4':Q4Sum,
+                'Четверть 1':Q1Sum,
+                'Четверть 2':Q2Sum,
+                'Четверть 3':Q3Sum,
+                'Четверть 4':Q4Sum,
             }
             allQGapObject = {
-                'Q1':Q1Gap,
-                'Q2':Q2Gap,
-                'Q3':Q3Gap,
-                'Q4':Q4Gap,
+                'Четверть 1':Q1Gap,
+                'Четверть 2':Q2Gap,
+                'Четверть 3':Q3Gap,
+                'Четверть 4':Q4Gap,
             }
         }
     }
@@ -471,8 +473,8 @@ export async function GET(request: Request) {
         history,
         damaged,
         zeros,
-        allSumsObject,
-        allGapsObject,
+        allSumsArray,
+        allGapsArray,
         allCNSumObject,
         allCNGapObject,
         allBWSumObject,

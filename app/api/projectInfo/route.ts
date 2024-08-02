@@ -102,7 +102,7 @@ export async function GET(request: Request) {
             },
             orderBy: [
                 {
-                    id: 'desc',
+                    id: 'asc',
                 }
             ],
         })

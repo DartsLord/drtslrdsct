@@ -99,7 +99,12 @@ export async function GET(request: Request) {
         contestRecords = await prisma.outcomes.findMany({
             where: {
                 contest_extId: contest,
-            }
+            },
+            orderBy: [
+                {
+                    id: 'desc',
+                }
+            ],
         })
 
         if(contestRecords){

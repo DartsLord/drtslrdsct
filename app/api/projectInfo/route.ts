@@ -60,6 +60,8 @@ export async function GET(request: Request) {
     let zeros: number[] = []
     let damaged: number[] = []
     let history: number[] = []
+    let player1Id = null
+    let player2Id = null
 
     if(contest){
         let contestPlayersIdsPre = await prisma.contests.findFirst({
@@ -72,6 +74,7 @@ export async function GET(request: Request) {
             const fpId: number = contestPlayersIdsPre.fp_id
             fpScore = contestPlayersIdsPre.fp_score
             if(fpId){
+                player1Id = fpId
                 let fpNamePre = await prisma.players.findFirst({
                     where: {
                         extId: fpId
@@ -84,6 +87,7 @@ export async function GET(request: Request) {
             const spId: number = contestPlayersIdsPre.sp_id
             spScore = contestPlayersIdsPre.sp_score
             if(spId){
+                player2Id = spId
                 let spNamePre = await prisma.players.findFirst({
                     where: {
                         extId: spId
@@ -487,6 +491,8 @@ export async function GET(request: Request) {
         allODSumObject,
         allODGapObject,
         allQSumObject,
-        allQGapObject
+        allQGapObject,
+        player1Id,
+        player2Id
     }, { status: 200 })
 }

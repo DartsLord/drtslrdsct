@@ -814,11 +814,11 @@ export async function GET(request: Request) {
         });
 
         for(let i: number = 0; i < 5; i++) {
-            Top5Player1.push(sortedTop5Player1Pre[i][0])
+            Top5Player1.push(parseInt(sortedTop5Player1Pre[i][0]))
         }
 
         for(let i: number = 0; i < 5; i++) {
-            Top5Player2.push(sortedTop5Player2Pre[i][0])
+            Top5Player2.push(parseInt(sortedTop5Player2Pre[i][0]))
         }
     }
 

@@ -30,7 +30,64 @@ let q2: number[] = [6, 10, 15, 2, 17]
 let q3: number[] = [3, 19, 7, 16, 8]
 let q4: number[] = [11, 14, 9, 12, 5]
 
+let leftOutcomesNumbers: number[] = [1,2,3]
+let rightOutcomesNumbers: number[] = [4,5,6]
+
 export async function GET(request: Request) {
+    let P1Num1Sum: number = 0
+    let P1Num2Sum: number = 0
+    let P1Num3Sum: number = 0
+    let P1Num4Sum: number = 0
+    let P1Num5Sum: number = 0
+    let P1Num6Sum: number = 0
+    let P1Num7Sum: number = 0
+    let P1Num8Sum: number = 0
+    let P1Num9Sum: number = 0
+    let P1Num10Sum: number = 0
+    let P1Num11Sum: number = 0
+    let P1Num12Sum: number = 0
+    let P1Num13Sum: number = 0
+    let P1Num14Sum: number = 0
+    let P1Num15Sum: number = 0
+    let P1Num16Sum: number = 0
+    let P1Num17Sum: number = 0
+    let P1Num18Sum: number = 0
+    let P1Num19Sum: number = 0
+    let P1Num20Sum: number = 0
+    let P1Num21Sum: number = 0
+
+    let P2Num1Sum: number = 0
+    let P2Num2Sum: number = 0
+    let P2Num3Sum: number = 0
+    let P2Num4Sum: number = 0
+    let P2Num5Sum: number = 0
+    let P2Num6Sum: number = 0
+    let P2Num7Sum: number = 0
+    let P2Num8Sum: number = 0
+    let P2Num9Sum: number = 0
+    let P2Num10Sum: number = 0
+    let P2Num11Sum: number = 0
+    let P2Num12Sum: number = 0
+    let P2Num13Sum: number = 0
+    let P2Num14Sum: number = 0
+    let P2Num15Sum: number = 0
+    let P2Num16Sum: number = 0
+    let P2Num17Sum: number = 0
+    let P2Num18Sum: number = 0
+    let P2Num19Sum: number = 0
+    let P2Num20Sum: number = 0
+    let P2Num21Sum: number = 0
+
+    let P1Q1Sum: number = 0
+    let P1Q2Sum: number = 0
+    let P1Q3Sum: number = 0
+    let P1Q4Sum: number = 0
+
+    let P2Q1Sum: number = 0
+    let P2Q2Sum: number = 0
+    let P2Q3Sum: number = 0
+    let P2Q4Sum: number = 0
+
     let round
     let outcome
     let lasthit
@@ -470,6 +527,301 @@ export async function GET(request: Request) {
         }
     }
 
+    let Top5Player1: number[] = []
+    let Top5Player2: number[] = []
+
+    if(player1Id && player2Id && outcome === 1){
+        // for Player 1
+        let Player1ContestsIdsLeftArray: number[] = []
+        const allPlayer1ContestsLeftPromise = prisma.contests.findMany({
+            where: {
+                fp_id: parseInt(player1Id),
+            }
+        })
+
+        const allPlayer1ContestsLeft = await allPlayer1ContestsLeftPromise
+        if(allPlayer1ContestsLeft){
+            allPlayer1ContestsLeft.forEach((contest) => {
+                Player1ContestsIdsLeftArray.push(contest.extId)
+            })
+        }
+
+        let Player1ContestsIdsRightArray: number[] = []
+        const allPlayer1ContestsRightPromise = prisma.contests.findMany({
+            where: {
+                sp_id: parseInt(player1Id),
+            }
+        })
+
+        const allPlayer1ContestsRight = await allPlayer1ContestsRightPromise
+        if(allPlayer1ContestsRight){
+            allPlayer1ContestsRight.forEach((contest) => {
+                Player1ContestsIdsRightArray.push(contest.extId)
+            })
+        }
+
+        const allPlayer1OutcomesLeftPromise = prisma.outcomes.findMany({
+            where: {
+                contest_extId: {
+                    in: Player1ContestsIdsLeftArray
+                },
+                o: {
+                    in: leftOutcomesNumbers
+                }
+            }
+        })
+        const allPlayer1OutcomesLeft = await allPlayer1OutcomesLeftPromise
+
+        const allPlayer1OutcomesRightPromise = prisma.outcomes.findMany({
+            where: {
+                contest_extId: {
+                    in: Player1ContestsIdsRightArray
+                },
+                o: {
+                    in: rightOutcomesNumbers
+                }
+            }
+        })
+        const allPlayer1OutcomesRight = await allPlayer1OutcomesRightPromise
+
+        // for Player 2
+        let Player2ContestsIdsLeftArray: number[] = []
+        const allPlayer2ContestsLeftPromise = prisma.contests.findMany({
+            where: {
+                fp_id: parseInt(player2Id),
+            }
+        })
+
+        const allPlayer2ContestsLeft = await allPlayer2ContestsLeftPromise
+        if(allPlayer2ContestsLeft){
+            allPlayer2ContestsLeft.forEach((contest) => {
+                Player2ContestsIdsLeftArray.push(contest.extId)
+            })
+        }
+
+        let Player2ContestsIdsRightArray: number[] = []
+        const allPlayer2ContestsRightPromise = prisma.contests.findMany({
+            where: {
+                sp_id: parseInt(player2Id),
+            }
+        })
+
+        const allPlayer2ContestsRight = await allPlayer2ContestsRightPromise
+        if(allPlayer2ContestsRight){
+            allPlayer2ContestsRight.forEach((contest) => {
+                Player2ContestsIdsRightArray.push(contest.extId)
+            })
+        }
+
+        const allPlayer2OutcomesLeftPromise = prisma.outcomes.findMany({
+            where: {
+                contest_extId: {
+                    in: Player2ContestsIdsLeftArray
+                },
+                o: {
+                    in: leftOutcomesNumbers
+                }
+            }
+        })
+        const allPlayer2OutcomesLeft = await allPlayer2OutcomesLeftPromise
+
+        const allPlayer2OutcomesRightPromise = prisma.outcomes.findMany({
+            where: {
+                contest_extId: {
+                    in: Player2ContestsIdsRightArray
+                },
+                o: {
+                    in: rightOutcomesNumbers
+                }
+            }
+        })
+        const allPlayer2OutcomesRight = await allPlayer2OutcomesRightPromise
+
+        // calculating
+        if(allPlayer1OutcomesLeft){
+            allPlayer1OutcomesLeft.forEach((outcome) => {
+                const hit: number = outcome.h
+
+                if(hit === 1) P1Num1Sum++
+                if(hit === 2) P1Num2Sum++
+                if(hit === 3) P1Num3Sum++
+                if(hit === 4) P1Num4Sum++
+                if(hit === 5) P1Num5Sum++
+                if(hit === 6) P1Num6Sum++
+                if(hit === 7) P1Num7Sum++
+                if(hit === 8) P1Num8Sum++
+                if(hit === 9) P1Num9Sum++
+                if(hit === 10) P1Num10Sum++
+                if(hit === 11) P1Num11Sum++
+                if(hit === 12) P1Num12Sum++
+                if(hit === 13) P1Num13Sum++
+                if(hit === 14) P1Num14Sum++
+                if(hit === 15) P1Num15Sum++
+                if(hit === 16) P1Num16Sum++
+                if(hit === 17) P1Num17Sum++
+                if(hit === 18) P1Num18Sum++
+                if(hit === 19) P1Num19Sum++
+                if(hit === 20) P1Num20Sum++
+                if(hit === 21) P1Num21Sum++
+            })
+        }
+        if(allPlayer1OutcomesRight){
+            allPlayer1OutcomesRight.forEach((outcome) => {
+                const hit: number = outcome.h
+
+                if(hit === 1) P1Num1Sum++
+                if(hit === 2) P1Num2Sum++
+                if(hit === 3) P1Num3Sum++
+                if(hit === 4) P1Num4Sum++
+                if(hit === 5) P1Num5Sum++
+                if(hit === 6) P1Num6Sum++
+                if(hit === 7) P1Num7Sum++
+                if(hit === 8) P1Num8Sum++
+                if(hit === 9) P1Num9Sum++
+                if(hit === 10) P1Num10Sum++
+                if(hit === 11) P1Num11Sum++
+                if(hit === 12) P1Num12Sum++
+                if(hit === 13) P1Num13Sum++
+                if(hit === 14) P1Num14Sum++
+                if(hit === 15) P1Num15Sum++
+                if(hit === 16) P1Num16Sum++
+                if(hit === 17) P1Num17Sum++
+                if(hit === 18) P1Num18Sum++
+                if(hit === 19) P1Num19Sum++
+                if(hit === 20) P1Num20Sum++
+                if(hit === 21) P1Num21Sum++
+            })
+        }
+        if(allPlayer2OutcomesLeft){
+            allPlayer2OutcomesLeft.forEach((outcome) => {
+                const hit: number = outcome.h
+
+                if(hit === 1) P2Num1Sum++
+                if(hit === 2) P2Num2Sum++
+                if(hit === 3) P2Num3Sum++
+                if(hit === 4) P2Num4Sum++
+                if(hit === 5) P2Num5Sum++
+                if(hit === 6) P2Num6Sum++
+                if(hit === 7) P2Num7Sum++
+                if(hit === 8) P2Num8Sum++
+                if(hit === 9) P2Num9Sum++
+                if(hit === 10) P2Num10Sum++
+                if(hit === 11) P2Num11Sum++
+                if(hit === 12) P2Num12Sum++
+                if(hit === 13) P2Num13Sum++
+                if(hit === 14) P2Num14Sum++
+                if(hit === 15) P2Num15Sum++
+                if(hit === 16) P2Num16Sum++
+                if(hit === 17) P2Num17Sum++
+                if(hit === 18) P2Num18Sum++
+                if(hit === 19) P2Num19Sum++
+                if(hit === 20) P2Num20Sum++
+                if(hit === 21) P2Num21Sum++
+            })
+        }
+        if(allPlayer2OutcomesRight){
+            allPlayer2OutcomesRight.forEach((outcome) => {
+                const hit: number = outcome.h
+
+                if(hit === 1) P2Num1Sum++
+                if(hit === 2) P2Num2Sum++
+                if(hit === 3) P2Num3Sum++
+                if(hit === 4) P2Num4Sum++
+                if(hit === 5) P2Num5Sum++
+                if(hit === 6) P2Num6Sum++
+                if(hit === 7) P2Num7Sum++
+                if(hit === 8) P2Num8Sum++
+                if(hit === 9) P2Num9Sum++
+                if(hit === 10) P2Num10Sum++
+                if(hit === 11) P2Num11Sum++
+                if(hit === 12) P2Num12Sum++
+                if(hit === 13) P2Num13Sum++
+                if(hit === 14) P2Num14Sum++
+                if(hit === 15) P2Num15Sum++
+                if(hit === 16) P2Num16Sum++
+                if(hit === 17) P2Num17Sum++
+                if(hit === 18) P2Num18Sum++
+                if(hit === 19) P2Num19Sum++
+                if(hit === 20) P2Num20Sum++
+                if(hit === 21) P2Num21Sum++
+            })
+        }
+
+        let Top5Player1Pre: object = {
+            20: P1Num20Sum,
+            1: P1Num1Sum,
+            18: P1Num18Sum,
+            4: P1Num4Sum,
+            13: P1Num13Sum,
+            6: P1Num6Sum,
+            10: P1Num10Sum,
+            15: P1Num15Sum,
+            2: P1Num2Sum,
+            17: P1Num17Sum,
+            3: P1Num3Sum,
+            19: P1Num19Sum,
+            7: P1Num7Sum,
+            16: P1Num16Sum,
+            8: P1Num8Sum,
+            11: P1Num11Sum,
+            14: P1Num14Sum,
+            9: P1Num9Sum,
+            12: P1Num12Sum,
+            5: P1Num5Sum,
+            21: P1Num21Sum,
+        };
+
+        let Top5Player2Pre: object = {
+            20: P2Num20Sum,
+            1: P2Num1Sum,
+            18: P2Num18Sum,
+            4: P2Num4Sum,
+            13: P2Num13Sum,
+            6: P2Num6Sum,
+            10: P2Num10Sum,
+            15: P2Num15Sum,
+            2: P2Num2Sum,
+            17: P2Num17Sum,
+            3: P2Num3Sum,
+            19: P2Num19Sum,
+            7: P2Num7Sum,
+            16: P2Num16Sum,
+            8: P2Num8Sum,
+            11: P2Num11Sum,
+            14: P2Num14Sum,
+            9: P2Num9Sum,
+            12: P2Num12Sum,
+            5: P2Num5Sum,
+            21: P2Num21Sum,
+        };
+
+        let sortedTop5Player1Pre = [];
+        for (let num in Top5Player1Pre) {
+            sortedTop5Player1Pre.push([num, Top5Player1Pre[num]]);
+        }
+
+        let sortedTop5Player2Pre = [];
+        for (let num in Top5Player2Pre) {
+            sortedTop5Player2Pre.push([num, Top5Player2Pre[num]]);
+        }
+
+        sortedTop5Player1Pre.sort(function(a, b) {
+            return b[1] - a[1];
+        });
+
+        sortedTop5Player2Pre.sort(function(a, b) {
+            return b[1] - a[1];
+        });
+
+        for(let i: number = 0; i < 5; i++) {
+            Top5Player1.push(sortedTop5Player1Pre[i][0])
+        }
+
+        for(let i: number = 0; i < 5; i++) {
+            Top5Player2.push(sortedTop5Player2Pre[i][0])
+        }
+    }
+
     return NextResponse.json({
         contest,
         round,
@@ -492,7 +844,7 @@ export async function GET(request: Request) {
         allODGapObject,
         allQSumObject,
         allQGapObject,
-        player1Id,
-        player2Id
+        Top5Player1,
+        Top5Player2
     }, { status: 200 })
 }

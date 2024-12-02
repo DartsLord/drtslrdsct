@@ -529,6 +529,7 @@ export async function GET(request: Request) {
 
     let Top5Player1: number[] = []
     let Top5Player2: number[] = []
+    let Top5Collapsed: number[] = []
 
     if(player1Id && player2Id && outcome === 1){
         // for Player 1
@@ -820,6 +821,13 @@ export async function GET(request: Request) {
         for(let i: number = 0; i < 5; i++) {
             Top5Player2.push(parseInt(sortedTop5Player2Pre[i][0]))
         }
+
+        let Top5Player12Merged = Top5Player1.concat(Top5Player2);
+        Top5Player12Merged.forEach(elem => {
+            if(Top5Collapsed.indexOf(elem) === -1){
+                Top5Collapsed.push(elem)
+            }
+        })
     }
 
     return NextResponse.json({
@@ -845,6 +853,7 @@ export async function GET(request: Request) {
         allQSumObject,
         allQGapObject,
         Top5Player1,
-        Top5Player2
+        Top5Player2,
+        Top5Collapsed
     }, { status: 200 })
 }
